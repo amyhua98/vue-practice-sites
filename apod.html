@@ -1,0 +1,56 @@
+<DOCTYPE html>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    
+    <div id = "app">
+        <div class="container">
+            <apod>
+                <h3 slot= "title">#1</h3>
+                <p slot= "caption"> Here's today's picture!</p>
+            </apod>
+            <apod>date= "2018-08-07"</apod>
+            <h3 slot= "title">#2</h3>
+                <p slot= "caption"> Here's picture of {{date}}</p>
+        </div>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://api.nasa.gov/planetary/apod?api_key="></script>
+<script>
+    var anotherComponent = {
+        data: function (){
+            return {
+                msg: 'Hello from another component'
+            }
+        },
+        template: '<h1>{{msg}}</h1>'
+    }
+
+    Vue.component('a-pod', {
+        template: '<div> \
+                <slot name= "title"><h3>Untitled</h3><slot> \
+                <img width= "300" height= "200" :src= "imgSrc" :title= "imgTitle"> \
+                <slot name= "caption"><p>unknown date <\p> </slot> \
+                </div>',
+        props: [date],
+        date: function() {
+            return {
+                imgSrc: '',
+                imgTitle: ''
+            };
+        },
+        created: function () {
+            this.fetchApod();
+        }
+    });
+    var vm = new Vue({
+        el:'#app',
+        component:{
+            'another-component': anotherComponent
+        }
+    });
+</script>
+
+
+
+
